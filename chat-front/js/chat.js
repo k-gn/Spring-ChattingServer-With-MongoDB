@@ -1,3 +1,9 @@
+const eventSource = new EventSource("http://localhost:8080/sender/ssar/receiver/cos");
+eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log(data);
+}
+
 document.querySelector("#chat-send").addEventListener("click", () => {
 
     let chatBox = document.querySelector("#chat-box");
@@ -5,7 +11,7 @@ document.querySelector("#chat-send").addEventListener("click", () => {
 
     let chatOutgoingBox = document.createElement("div");
     chatOutgoingBox.className = "outgoing_msg";
-    chatOutgoingBox.innerHTML = getMsg(msgBox.value);
+    chatOutgoingBox.innerHTML = getSendMsgBox(msgBox.value);
     chatBox.append(chatOutgoingBox);
     msgBox.value = "";
 });
@@ -24,7 +30,7 @@ document.querySelector("#chat-outgoing-msg").addEventListener("keydown", (e) => 
     }
 });
 
-function getMsg(msg) {
+function getSendMsgBox(msg) {
     return `<div class="sent_msg">
                 <p>${msg}</p>
                 <span class="time_date"> 11:18 | Today</span>

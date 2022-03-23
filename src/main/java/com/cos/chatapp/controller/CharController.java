@@ -20,12 +20,14 @@ public class CharController {
 
     // consumes는 들어오는 데이터 타입을 정의
     // produces는 반환하는 데이터 타입을 정의
+    @CrossOrigin // cors 허용
     @GetMapping(value = "/sender/{sender}/receiver/{receiver}", produces = MediaType.TEXT_EVENT_STREAM_VALUE) // SSE -> 이때 Return Type = Flux
     public Flux<Chat> getMsg(@PathVariable String sender, @PathVariable String receiver) {
         return chatRepository.msgFindBySender(sender, receiver)
                 .subscribeOn(Schedulers.boundedElastic());
     }
 
+    @CrossOrigin
     @PostMapping("/chat")
     public Mono<Chat> setMsg(@RequestBody Chat chat) { // Mono : 데이터를 한번만 return
         chat.setCreatedAt(LocalDateTime.now());
