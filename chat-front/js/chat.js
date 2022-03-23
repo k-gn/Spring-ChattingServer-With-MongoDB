@@ -1,6 +1,8 @@
 let username = prompt("아이디를 입력하세요.");
 let roomNum = prompt("채팅방 번호를 입력하세요.");
 
+document.querySelector("#username").innerHTML = username;
+
 const eventSource = new EventSource(`http://localhost:8080/chat/roomNum/${roomNum}`);
 eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -91,7 +93,7 @@ function getReceiveMsgBox(data) {
     let date = getParseNowDate(data.createdAt);
     return `<div class="received_withd_msg">
                 <p>${data.msg}</p>
-                <span class="time_date"> ${date} / ${data.sender} </span>
+                <span class="time_date"> ${date} / <b>${data.sender}</b> </span>
             </div>`;
 }
 
@@ -99,7 +101,7 @@ function getSendMsgBox(data) {
     let date = getParseNowDate(data.createdAt);
     return `<div class="sent_msg">
                 <p>${data.msg}</p>
-                <span class="time_date"> ${date} / ${data.sender} </span>
+                <span class="time_date"> ${date} / <b>${data.sender}</b> </span>
             </div>`;
 }
 
