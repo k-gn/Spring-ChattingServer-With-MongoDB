@@ -67,13 +67,13 @@ function addMessage() {
 
 function initMyMessage(data) {
     let chatBox = document.querySelector("#chat-box");
-    // let msgBox = document.querySelector("#chat-outgoing-msg");
 
     let chatOutgoingBox = document.createElement("div");
     chatOutgoingBox.className = "outgoing_msg";
     chatOutgoingBox.innerHTML = getSendMsgBox(data);
     chatBox.append(chatOutgoingBox);
-    // msgBox.value = "";
+
+    document.documentElement.scrollTop = document.body.scrollHeight;
 } 
 
 function initYoursMessage(data) {
@@ -83,6 +83,8 @@ function initYoursMessage(data) {
     chatIncommingBox.className = "received_msg";
     chatIncommingBox.innerHTML = getReceiveMsgBox(data);
     chatBox.append(chatIncommingBox);
+
+    document.documentElement.scrollTop = document.body.scrollHeight;
 } 
 
 function getReceiveMsgBox(data) {
