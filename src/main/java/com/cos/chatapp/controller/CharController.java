@@ -18,12 +18,21 @@ public class CharController {
 
     private final ChatRepository chatRepository;
 
+    // 귓속말
     // consumes는 들어오는 데이터 타입을 정의
     // produces는 반환하는 데이터 타입을 정의
     @CrossOrigin // cors 허용
     @GetMapping(value = "/sender/{sender}/receiver/{receiver}", produces = MediaType.TEXT_EVENT_STREAM_VALUE) // SSE -> 이때 Return Type = Flux
     public Flux<Chat> getMsg(@PathVariable String sender, @PathVariable String receiver) {
         return chatRepository.msgFindBySender(sender, receiver)
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    // 채팅방
+    @CrossOrigin
+    @GetMapping(value = "/chat/roomNum/{roomNum}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Chat> findByRoomNum(@PathVariable Integer roomNum) {
+        return chatRepository.msgFindByRoomNum(roomNum)
                 .subscribeOn(Schedulers.boundedElastic());
     }
 

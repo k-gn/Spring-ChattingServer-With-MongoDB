@@ -13,4 +13,8 @@ public interface ChatRepository extends ReactiveMongoRepository<Chat, String> {
     @Tailable // 커서를 안닫고 계속 유지한다. 이 때 DB에 버퍼 크기를 늘려줘야 한다. (db.runCommand({convertToCapped: 'chat', size: 8192});)
     @Query("{sender: ?0, receiver: ?1}")
     Flux<Chat> msgFindBySender(String sender, String receiver);
+
+    @Tailable
+    @Query("{roomNum: ?0}")
+    Flux<Chat> msgFindByRoomNum(Integer roomNum);
 }
