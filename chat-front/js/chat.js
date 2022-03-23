@@ -17,7 +17,7 @@ document.querySelector("#chat-outgoing-msg").addEventListener("keydown", (e) => 
     }
 });
 
-function addMessage() {
+async function addMessage() { // async : 비동기 함수 처리
     let chatBox = document.querySelector("#chat-box");
     let msgBox = document.querySelector("#chat-outgoing-msg");
     
@@ -30,7 +30,7 @@ function addMessage() {
         msg: msgBox.value
     };
 
-    fetch("http://localhost:8080/chat", {
+    let response = await fetch("http://localhost:8080/chat", { // 응답 대기를 위한 await
         method: "post", 
         body: JSON.stringify(chat),
         headers: {
@@ -38,7 +38,7 @@ function addMessage() {
         }
     });
 
-
+    let parseResponse = await response.json();
     chatOutgoingBox.innerHTML = getSendMsgBox(msgBox.value, getNowDate());
     chatBox.append(chatOutgoingBox);
     msgBox.value = "";
